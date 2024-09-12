@@ -1,52 +1,39 @@
-# ASP.NET Core (.NET Framework)
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 trigger:
-- main
+  batch: true
+  branches:
+    include:
+      - "*"
+  paths:
+    exclude:
+      - obj/*
+      - bin/*
+      - "*.md"
 
-pool:
-  vmImage: 'windows-latest'
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - obj/*
+      - bin/*
+      - "*.md"
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+resources:
+  repositories:
+    - repository: common-pipelines
+      type: github
+      name: "jeevanthespark/common-pipelines"
+      ref: main
+      endpoint: "jeevanthespark"
 
-steps:
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    projects: '**/ApiTests.csproj'
-    arguments: '--configuration $(buildConfiguration)'
-
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
-
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+extends:
+  template: /templates/pipelines/common-app-ci.yaml@common-pipelines
+  parameters:
+    appBuildConfig:
+      serviceName: "devproject"
+      appProjectPath: "./src/Api/Api.csproj"
+      appFrameworkType: "dotnet"
+      frameworkVersion: "6.x"
+      buildConfiguration: "Release"
+      testProjectPath: "./test/ApiTests/ApiTests.csproj"
