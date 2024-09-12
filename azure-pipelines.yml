@@ -34,6 +34,6 @@ extends:
       serviceName: "devproject"
       appProjectPath: "./src/Api/Api.csproj"
       appFrameworkType: "dotnet"
-      frameworkVersion: "6.x"
+      frameworkVersion: "6.0"
       buildConfiguration: "Release"
       testProjectPath: "./test/ApiTests/ApiTests.csproj"
