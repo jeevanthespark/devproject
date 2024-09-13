@@ -1,6 +1,5 @@
 ﻿using CleanArchitecture.MyShop.Application.Interfaces;
 using CleanArchitecture.MyShop.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.MyShop.Api.Controllers
@@ -16,32 +15,32 @@ namespace CleanArchitecture.MyShop.Api.Controllers
             _productService = productService;
         }
 
-        [HttpGet]
-        [Route("")]
+        [HttpGet("", Name = "GetAllProducts")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
         public async Task<IActionResult> GetAllProducts()
         {
             var response = await _productService.GetAllProductsAsync();
             return Ok(response);
         }
 
-        [HttpGet]
-        [Route("/{id}")]
-        public async Task<IActionResult> GetProductsById([FromRoute] int id)
+        [HttpGet("/{id}", Name = "GetProductById")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
+        public async Task<IActionResult> GetProductById([FromRoute] int id)
         {
             var response = await _productService.GetByIdAsync(id);
             return Ok(response);
         }
 
-        [HttpPost]
-        [Route("")]
+        [HttpPost("", Name = "CreateProduct")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
         public async Task<IActionResult> CreateProduct([FromBody] Product product)
         {
             var response = await _productService.CreateProductAsync(product);
             return Ok(response);
         }
 
-        [HttpPut]
-        [Route("")]
+        [HttpPut("", Name = "UpdateProduct")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Product))]
         public async Task<IActionResult> UpdateProduct([FromBody] Product product)
         {
             var response = await _productService.UpdateProductAsync(product);
