@@ -24,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infra
 		{DB3C8974-94E2-41F1-87A4-1BD43F2442A8} = {DB3C8974-94E2-41F1-87A4-1BD43F2442A8}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTests", "test\ApiTests\ApiTests.csproj", "{8A5A8CA3-9872-4841-8A1C-04A21ED0CD68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiTests", "test\ApiTests\ApiTests.csproj", "{8A5A8CA3-9872-4841-8A1C-04A21ED0CD68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
