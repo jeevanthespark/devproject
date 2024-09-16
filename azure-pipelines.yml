@@ -33,6 +33,7 @@ extends:
     appBuildConfig:
       serviceName: "devproject"
       appProjectPath: "./src/Api/Api.csproj"
+      dockerFilePath: "Dockerfile"
       appFrameworkType: "dotnet"
       frameworkVersion: "8.x"
       buildConfiguration: "Release"
